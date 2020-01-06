@@ -1,0 +1,98 @@
+
+<html>
+    
+<head>
+ <style>
+     .dimensions
+     {
+         height:25px;
+         width:25px;
+         margin: 5px;
+    
+     }
+ </style>
+</head>
+
+<script>
+    // Global declaration
+    const MAX = 12;
+
+    function updateArray(row, col)
+    {
+        // Local declarations
+        let x = 0; // row
+        let y = 0; // col
+        let pos = 0;
+        let temp;
+        
+        let table = document.getElementsByClassName('dimensions');
+        
+        for(x = 0; x < MAX; ++x)
+        {
+            for(y = 0; y < MAX; ++y)
+            {
+                // Setting the current position
+                pos = x * MAX + y;
+                
+                // The column of the button
+                if(x == row)
+                    table[row * MAX + y].value = 'X';
+                
+                // The row of the button
+                if (y == col)
+                    table[x * MAX + col].value = 'Y';
+                    
+                // The button's ascending diagonal
+                if(x + y === row + col)
+                    table[pos].value = 'D';
+                    
+                // The button's descending diagonal
+                if(x - y === row - col)
+                    table[pos].value = 'D';
+                
+                // Current value of the button.
+                temp = table[pos].value;
+                
+                if( (temp ==='D' || temp === 'Y' || temp === 'X' || temp === '0') == false)
+                {
+                    table[x * MAX + y].value = table[x * MAX + y].name;
+                    table[pos].style.color = "black";
+                }
+                else
+                    table[pos].style.color = "red";
+            }
+            
+            table[row * MAX + col].value = '0';
+        }
+        
+    }
+
+    let a = new Array(MAX);
+    let row = 0;
+    let col = 0;
+
+    for(row = 0; row < a.length; ++row)
+    {
+        a[row] = new Array(MAX);
+    }
+
+    for(row = 0; row < a.length; ++row)
+    {
+        for(col = 0; col < a[row].length; ++col)
+        {
+            a[row][col] = Math.floor((Math.random() * 10) + 1);
+        }
+    }
+
+    for(row = 0; row < a.length; ++row)
+    {
+        for(col = 0; col < a[row].length; ++col)
+        {
+            //changeArray should pass the location of button not just row, col
+            document.write("<input type='button' class='dimensions' onclick='updateArray("+row+","+col+")' name='" + a[row][col] + "' value = ' '/>");
+        }
+        document.write("<br />");
+    }
+
+</script>
+</html>
